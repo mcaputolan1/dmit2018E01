@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVCS_Website", "DVCS_Websit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVCSSystem", "DVCSSystem\DVCSSystem.csproj", "{227481D5-09BD-467E-8445-25B35756D5C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVCSSystem.Data", "DVCSSystem.Data\DVCSSystem.Data.csproj", "{2C55FA9E-AC0F-4F13-8CD9-E9C269C54BB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{227481D5-09BD-467E-8445-25B35756D5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227481D5-09BD-467E-8445-25B35756D5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{227481D5-09BD-467E-8445-25B35756D5C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C55FA9E-AC0F-4F13-8CD9-E9C269C54BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C55FA9E-AC0F-4F13-8CD9-E9C269C54BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C55FA9E-AC0F-4F13-8CD9-E9C269C54BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C55FA9E-AC0F-4F13-8CD9-E9C269C54BB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
