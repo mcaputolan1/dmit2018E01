@@ -15,7 +15,7 @@ namespace ChinookSystem.Data.Entities
     public class Track
     {
         [Key]
-        public int MediaTypeId { get; set; } //auto implemented property
+        public int TrackId { get; set; } //auto implemented property
 
         //full implemented property
         private string _Name;
