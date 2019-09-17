@@ -34,6 +34,12 @@ namespace WebApp.SamplePages
             //ArtistList.Items.Insert(0, "select...");
         }
 
+        //in code behind to be called from ODS
+        protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+        {
+            MessageUserControl.HandleDataBoundException(e);
+        }
+
         protected void AlbumList_SelectedIndexChanged(object sender, EventArgs e)
         {
             //standard lookup
@@ -42,22 +48,34 @@ namespace WebApp.SamplePages
             string albumid = (agvrow.FindControl("AlbumId") as Label).Text;
 
             //error handling will need to be added
-            AlbumController sysmgr = new AlbumController();
-            Album datainfo = sysmgr.Album_Get(int.Parse(albumid));
-            if (datainfo == null)
+            MessageUserControl.TryRun(() =>
             {
-                //clear the controls
-                //throw an exception
+                //place your processing code
 
-            }
-            else
-            {
-                EditAlbumID.Text = datainfo.AlbumId.ToString();
-                EditTitle.Text = datainfo.Title;
-                EditAlbumArtistList.SelectedValue = datainfo.ArtistId.ToString();
-                EditReleaseYear.Text = datainfo.ReleaseYear.ToString();
-                EditReleaseLabel.Text = datainfo.ReleaseLabel == null ? "" : datainfo.ReleaseLabel;
-            }
+                AlbumController sysmgr = new AlbumController();
+                Album datainfo = sysmgr.Album_Get(int.Parse(albumid));
+                if (datainfo == null)
+                {
+                    //ClearControls();
+                    //throw an exception
+                    throw new Exception("Record no longer exists on file.");
+
+                }
+                else
+                {
+                    EditAlbumID.Text = datainfo.AlbumId.ToString();
+                    EditTitle.Text = datainfo.Title;
+                    EditAlbumArtistList.SelectedValue = datainfo.ArtistId.ToString();
+                    EditReleaseYear.Text = datainfo.ReleaseYear.ToString();
+                    EditReleaseLabel.Text = datainfo.ReleaseLabel == null ? "" : datainfo.ReleaseLabel;
+                }
+            }, "Find Album", "Album Found" //strings on this line are success message
+            );            
+        }
+
+        protected void AlbumListODS_Selected(object sender, ObjectDataSourceStatusEventArgs e)
+        {
+
         }
     }
 }
