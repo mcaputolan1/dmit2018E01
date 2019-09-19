@@ -87,6 +87,8 @@
                             <asp:MenuItem Text="Samples" Value="Samples">
                                 <asp:MenuItem Text="Review CRUD"
                                     NavigateUrl="~/SamplePages/FilterSearchCRUD.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="ListView CRUD Using ODS"
+                                    NavigateUrl="~/SamplePages/ListViewCRUDODS.aspx"></asp:MenuItem>
                             </asp:MenuItem>
                         </Items>
                     </asp:Menu>
