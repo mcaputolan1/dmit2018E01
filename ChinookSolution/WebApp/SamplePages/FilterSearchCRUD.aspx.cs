@@ -119,7 +119,42 @@ namespace WebApp.SamplePages
 
         protected void Update_Click(object sender, EventArgs e)
         {
+            if (Page.IsValid)
+            {
+                int editalbumid = 0;
+                string albumid = EditAlbumID.Text;
+                if (string.IsNullOrEmpty(albumid))
+                {
+                    MessageUserControl.ShowInfo("Attention","Lookup the album before editing.");
+                }
+                else if (!int.TryParse(albumid, out editalbumid))
+                {
+                    MessageUserControl.ShowInfo("Attention","Current albumid is invalid. Perform lookup again.");
+                }
+                else
+                {                
+                    Album theAlbum = new Album();
+                    theAlbum.AlbumId = editalbumid;
+                    theAlbum.Title = EditTitle.Text;
+                    theAlbum.ArtistId = int.Parse(EditAlbumArtistList.SelectedValue);
+                    theAlbum.ReleaseYear = int.Parse(EditReleaseYear.Text);
+                    theAlbum.ReleaseLabel = EditReleaseLabel.Text == "" ? null : EditReleaseLabel.Text;
 
+                    MessageUserControl.TryRun(() =>
+                    {
+                        AlbumController sysmgr = new AlbumController();
+                        int rowsaffected = sysmgr.Album_Update(theAlbum);
+                        if (rowsaffected > 0)
+                        {
+                            AlbumList.DataBind();
+                        }
+                        else
+                        {
+                            throw new Exception("Album was not found. Repeat lookup and update again.");
+                        }
+                    }, "Successful", "Album updated");
+                }
+            }
         }
 
         protected void Remove_Click(object sender, EventArgs e)
