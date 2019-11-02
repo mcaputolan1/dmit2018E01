@@ -205,7 +205,6 @@ namespace Jan2018DemoWebsite.SamplePages
                     trackid = int.Parse((PlayList.Rows[rowindex].FindControl("TrackID") as Label).Text);
                     tracknumber = int.Parse((PlayList.Rows[rowindex].FindControl("TrackNumber") as Label).Text);
                 }
-
             }
             if (rowsSelected != 1)
             {
@@ -251,7 +250,59 @@ namespace Jan2018DemoWebsite.SamplePages
         protected void DeleteTrack_Click(object sender, EventArgs e)
         {
             //code to go here
- 
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("Required Data", "Play list name is required to add a track.");
+            }
+            else
+            {
+                if (PlayList.Rows.Count == 0)
+                {
+                    MessageUserControl.ShowInfo("Required Data", "No playlist is available. Retrieve your playlist.");
+                }
+                else
+                {
+                    //traverse the gridview and collect the list of tracks to remove
+                    List<int> trackstodelete = new List<int>();
+                    int rowsSelected = 0;
+                    CheckBox playlistselection = null;
+
+                    for (int rowindex = 0; rowindex < PlayList.Rows.Count; rowindex++)
+                    {
+                        //access the checkbox control on the indexed GridViewRow
+                        //set the CheckBox pointer to this checkbox control
+                        playlistselection = PlayList.Rows[rowindex].FindControl("Selected") as CheckBox;
+                        if (playlistselection.Checked)
+                        {
+                            //increase selected number of rows
+                            rowsSelected++;
+                            //gather the data needed for the BLL call
+                            trackstodelete.Add(int.Parse((PlayList.Rows[rowindex].FindControl("TrackID") as Label).Text));
+                        }
+                    }
+
+                    if (rowsSelected == 0)
+                    {
+                        MessageUserControl.ShowInfo("Required Data", "You must select at least one track to remove.");
+                    }
+                    else
+                    {
+                        //send list of tracks to be remove by BLL
+                        MessageUserControl.TryRun(() =>
+                        {
+                            PlaylistTracksController sysmgr = new PlaylistTracksController();
+                            //there is ONLY one call to add the data to the database
+                            sysmgr.DeleteTracks("HansenB", PlaylistName.Text, trackstodelete);
+
+                            //refresh the playlist is a READ
+                            List<UserPlaylistTrack> datainfo = sysmgr.List_TracksForPlaylist(PlaylistName.Text, "HansenB");
+                            PlayList.DataSource = datainfo;
+                            PlayList.DataBind();
+                        }, "Remove track(s)", "Track has been removed from the playlist");
+                    }
+                }
+            }
+
         }
 
         protected void TracksSelectionList_ItemCommand(object sender, 
