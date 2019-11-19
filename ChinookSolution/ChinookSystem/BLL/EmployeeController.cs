@@ -14,7 +14,7 @@ using ChinookSystem.Data.DTOs;
 #endregion
 
 namespace ChinookSystem.BLL
-{
+{    
     public class EmployeeController
     {
         public List<string> Employees_GetTitle()
@@ -24,6 +24,22 @@ namespace ChinookSystem.BLL
                 var results = (from x in context.Employees
                                select x.Title).Distinct();
                 return results.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        public List<SelectionList> Employee_ListNames()
+        {
+            using (var context = new ChinookContext())
+            {
+                var employeelist = from x in context.Employees
+                                   orderby x.LastName, x.FirstName
+                                   select new SelectionList
+                                   {
+                                       DisplayText = x.LastName + ", " + x.FirstName,
+                                       IDValueField = x.EmployeeId
+                                   };
+                return employeelist.ToList();
             }
         }
     }
