@@ -56,6 +56,7 @@
     <Compile Include="BLL\GenreController.cs" />
     <Compile Include="BLL\MediaTypeController.cs" />
     <Compile Include="BLL\PlaylistTracksController.cs" />
+    <Compile Include="BLL\Track.cs" />
     <Compile Include="BLL\TrackController.cs" />
     <Compile Include="DAL\ChinookContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
